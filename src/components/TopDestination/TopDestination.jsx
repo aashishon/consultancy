@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import operaHouse from '../../assets/operaHouse.jpeg';
 import liberty from '../../assets/liberty.jpeg';
 import nzland from '../../assets/nzland.jpeg';
@@ -8,16 +9,22 @@ import korea from '../../assets/korea.jpg';
 import europe from '../../assets/europe.jpeg';
 
 const studyDestinations = [
-  { name: 'Australia', image: operaHouse },
-  { name: 'USA', image: liberty },
-  { name: 'New Zealand', image: nzland },
-  { name: 'Canada', image: niagara },
-  { name: 'United Kingdom', image: london },
-  { name: 'South Korea', image: korea },
-  { name: 'Europe', image: europe }
+  { name: 'Australia', image: operaHouse, slug: 'australia' },
+  { name: 'USA', image: liberty, slug: 'usa' },
+  { name: 'New Zealand', image: nzland, slug: 'new-zealand' },
+  { name: 'Canada', image: niagara, slug: 'canada' },
+  { name: 'United Kingdom', image: london, slug: 'united-kingdom' },
+  { name: 'South Korea', image: korea, slug: 'south-korea' },
+  { name: 'Europe', image: europe, slug: 'europe' }
 ];
 
 const TopStudyDestination = () => {
+  const navigate = useNavigate();
+
+  const handleClick = (slug) => {
+    navigate(`/destination/${slug}`);
+  };
+
   return (
     <div className="bg-gray-50 py-16 px-10 lg:px-20">
       <div className="max-w-7xl mx-auto text-center mb-12">
@@ -33,21 +40,18 @@ const TopStudyDestination = () => {
         </p>
       </div>
 
-      {/* Grid for study destinations */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
         {studyDestinations.map((destination, index) => (
           <div
             key={index}
-            className="relative group overflow-hidden rounded-lg shadow-lg bg-white hover:shadow-2xl transition-shadow duration-300"
+            className="relative group overflow-hidden rounded-lg shadow-lg bg-white hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+            onClick={() => handleClick(destination.slug)}
           >
-            {/* Image for each country */}
             <img
               src={destination.image}
               alt={destination.name}
               className="w-full h-56 object-cover transition-transform duration-300 transform group-hover:scale-105"
             />
-
-            {/* Country name overlay, always visible and slightly transparent */}
             <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
               <h2 className="text-white text-2xl font-bold transition-opacity duration-300 opacity-80 group-hover:opacity-100">
                 {destination.name}
